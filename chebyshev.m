@@ -116,7 +116,7 @@ function [y, flag, relres, iter, resvec] = chebyshev(Afun, b, Mfun, eigmax, eigm
     end
 
     % tol not reached by iteration
-    warning(sprintf("Tolerance not reached by iteration! Providing iterate %d with the smallest relative residual %g.", iter_min, relres_min));
+    warning("Tolerance not reached by iteration! Providing iterate %d with the smallest relative residual %g.", iter_min, relres_min);
     y = y_min;
     relres = relres_min;
     iter = iter_min;
