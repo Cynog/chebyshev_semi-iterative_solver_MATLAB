@@ -1,15 +1,16 @@
-N = 1000000
-tol = 1e-14;
-maxit = 50;
+% parameters
+N = 1e7;
+tol = 1e-12;
+maxit = 100;
 
-% function handle for matrix A
+% function handle for 1d-Poisson matrix
 fh_poisson1d = @(x) matfun_poisson1d(x, N);
 
 % Function handle for Richardson iteration
 fh_richardson = @(v) v;
-fh_jacobi = @(v) 1/4 * v;
+fh_jacobi = @(v)1/4 * v;
 
-% Generate a random normally distributed right hand side
+% Random normally distributed right hand side
 b = randn(N, 1);
 normb = norm(b);
 
@@ -38,7 +39,7 @@ iter_j
 % Plot the relative residuals
 figure();
 semilogy(0:length(relresvec_r) - 1, relresvec_r, 0:length(relresvec_j) - 1, relresvec_j);
-title("Chebyscheff semi-iterative method", "Interpreter", "latex");
+title("Chebyscheff semi-iterative method solving 1d-Poisson equation", "Interpreter", "latex");
 legend(append("Richardson   ", sprintf("t = %6fs", t_r)), append("Jacobi   ", sprintf("t = %6fs", t_j)), "Interpreter", "latex");
 xlabel("iterations", "Interpreter", "latex");
 ylabel("relative $l_2$-residual", "Interpreter", "latex");
