@@ -1,19 +1,20 @@
-N = 1000000
-tol = 1e-14;
-maxit = 50;
+% parameters
+N = 5e6;
+tol = 1e-12;
+maxit = 100;
 
-% Generate a random normally distributed right hand side
-b = randn(N + 1, 1);
+% random normally distributed right hand side
+b = randn(N, 1);
 normb = norm(b);
 
 % function handle for matrix A
-fh_Q = @(v) matfun_Q(v, N);
+fh_Q = @(v) [0; v(1:N - 1)] + [2 * v(1); 4 * v(2:N - 1); 2 * v(N)] + [v(2:N); 0];
 
-% Function handle for Richardson and Jacobi iteration
+% function handle for Richardson and Jacobi iteration
 fh_richardson = @(v) v;
-fh_jacobi = @(v) v ./ [2; 4 * ones(N - 1, 1); 2];
+fh_jacobi = @(v) v ./ [2; 4 * ones(N - 2, 1); 2];
 
-% Apply Chebyshev with Richardson iteration for the known eigenvalue bounds
+% apply Chebyshev with Richardson iteration for the known eigenvalue bounds
 eigmax = 6;
 eigmin = 1;
 tic;
@@ -24,7 +25,7 @@ flag_r
 relres_r
 iter_r
 
-% Apply Chebyshev with Jacobi iteration for the known eigenvalue bounds
+% apply Chebyshev with Jacobi iteration for the known eigenvalue bounds
 eigmax = 1.5;
 eigmin = 0.5;
 tic;
@@ -35,10 +36,10 @@ flag_j
 relres_j
 iter_j
 
-% Plot the relative residuals
+% plot the relative residuals
 figure();
 semilogy(0:length(relresvec_r) - 1, relresvec_r, 0:length(relresvec_j) - 1, relresvec_j);
-title("Chebyscheff semi-iterative method", "Interpreter", "latex");
+title(append("Chebyscheff semi-iterative method applied to ", sprintf("%g-dimensional", N), " mass matrix"), "Interpreter", "latex");
 legend(append("Richardson   ", sprintf("t = %6fs", t_r)), append("Jacobi   ", sprintf("t = %6fs", t_j)), "Interpreter", "latex");
 xlabel("iterations", "Interpreter", "latex");
 ylabel("relative $l_2$-residual", "Interpreter", "latex");
