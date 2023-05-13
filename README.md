@@ -15,8 +15,12 @@ Equivalently we can estimate the eigenvalue bounds of $M^{-1} A$ by $eigmin$ and
 
 ## 3. Examples
 
-### 3.1 Poisson Equation
+### 3.1 Mass-matrix
 *in progress*
+
+<p align="center">
+<img src="./assets/chebyscheff_1e+07_mass_matrix.svg"/>
+</p>
 
 ### 3.2 Chebyshev semi-iterative method as preconditioner
 *in progress*
